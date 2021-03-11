@@ -1,0 +1,79 @@
+#################################################################################################
+# File              : delivery_robot_node_tb3_01_L.yaml
+# Last Update Date  : 2020/11/30
+# Author            : S.Kumada
+#################################################################################################
+# Change history 
+# DATE        Author     Description
+# 2020/09/28  S.Kuamda   footprint情報の追加
+# 2020/09/29  S.Kumada   destination_pointの追加（社内環境用、シミュレータ用、LiCTiA環境用）
+# 2020/10/02  S.Kumada   destination_pointの座標修正（LiCTiA環境用）
+#                        旋回操作除外地点リスト（turn_exclusion_list）の設定の追加
+#                        　対象地点はD,E,G,I,K
+# 2020/10/07  S.Kumada   旋回操作除外地点リストのパラメータ名の修正（2020/10/06レビュー指摘対応 #6）
+#                           turn_exclusion_list→turn_control_exclusion_list
+# 2020/10/13  S.Kumada   目的地へ旋回する速度（destination_turn_speed）のパラメータを追加（2020/10/06レビュー指摘対応 #1）
+# 2020/10/14  S.Kumada   ナビゲーション中の旋回速度パラメータを統一するためにdestination_turn_speed→navigation_turn_speedへ変更
+# 2020/10/26  S.Kumada   TB3の実機環境に合わせ，ファイル名を更新
+#                           delivery_robot_node_tb3_0.yaml→delivery_robot_node_tb3_01.yaml
+# 2020/10/28  S.kumada   初期位置がシミュレータ環境のままだったので、[0.0, 0.0, 0.0]へ修正
+# 20f20/10/29  H.Kageyama 社内環境用とLICTiA環境用にファイルを別立てし、ファイル名を変更
+#                           delivery_robot_node_tb3_01.yaml -> delivery_robot_node_tb3_01_L.yaml
+# 2020/11/05  S.kumada   G地点座標が誤っていた為，修正
+# 2020/11/11  S.kumada   初期位置（initial_pose）の座標をC地点へ変更
+# 2020/11/17  S.kumada   旋回除外範囲（turn_control_exclusion_range）を追加
+#                          目的地リスト（destination_coordinate）及び旋回操作除外地点リスト（turn_control_exclusion_list）の削除
+#                          TIS様からの情報を元に初期位置（initial_pose）の座標を更新
+# 2020/11/30  S.kumada   スタックチェック間隔時間（stuck_check_time），スタック判定の移動半径（stuck_threshold_length）を追加
+# 2021/2/22   S.kumada   footprint情報は上位側で生成するポテンシャルの幅に影響する情報のため、costmap_common_params_waffle_pi.yaml記載の値に合わせて修正
+##################################################################################################
+
+# 初期位置（B地点）
+initial_pose: [-2.100, 0.550, -1.570]
+
+# キャリブレーション 回転速度[rad/s]
+initial_turn_speed: 0.5
+# 目的地へロボットを旋回する時の回転速度[rad/s]
+navigation_turn_speed: 0.40
+# wayポイント停止時間[s]
+wp_sleep_time: 5
+# goalポイント許容範囲[m]
+goal_tolerance_range: 0.05
+# ゴール地点到達時のタイムアウトタイマー開始半径[m]
+goal_allowable_range: 0.10
+# ゴール地点到達時のタイムアウトタイマー[s]
+goal_allowable_time: 3
+# ゴール地点到達時のangle許容角度[rad]
+goal_allowable_angle: 0.035
+# スタックチェック間隔時間[s]
+stuck_check_time: 10
+# スタック判定の移動半径[m]
+stuck_threshold_length: 0.1
+
+####### 2020/09/28追加 #######
+# footprint情報[m]
+footprint:
+  - x: -0.240
+    y: -0.155
+  - x: -0.240
+    y: 0.155
+  - x: 0.092
+    y: 0.155
+  - x: 0.092
+    y: -0.155
+# robot_radius[m]
+robot_radius: 0.17
+# inflation_radius[m]
+inflation_raidus: 0.4
+
+# 旋回除外範囲
+turn_control_exclusion_range:
+  - x: 14.624   # 会議室1廊下側
+    y: -8.920
+  - x: 14.624   # 会議室1奥
+    y: -13.690
+  - x: 0.863    # 個室廊下側
+    y: -8.920
+  - x: 0.863    # 個室奥
+    y: -13.690
+

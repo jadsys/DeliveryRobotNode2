@@ -1,0 +1,10 @@
+<launch>
+  <!-- Arguments -->
+  <arg name="map_original_file" default="/home/ros/maps/maps_L_20200925_plan_costmap.yaml"/>
+
+  <!-- Map server -->
+  <node pkg="map_server" name="map_original_costmap_server" type="map_server" args="$(arg map_original_file)">
+    <remap from="map" to="map_original" />
+  </node>
+
+</launch>
