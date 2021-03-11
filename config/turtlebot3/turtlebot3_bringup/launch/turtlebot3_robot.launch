@@ -1,0 +1,23 @@
+<launch>
+  <arg name="multi_robot_name" default="turtlebot_01"/>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+  
+  <group ns="turtlebot_01">
+  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_core.launch">
+    <arg name="multi_robot_name" value="$(arg multi_robot_name)"/>
+  </include>
+
+  <node pkg="turtlebot3_bringup" type="turtlebot3_diagnostics" name="turtlebot3_diagnostics" output="screen"/>
+
+  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
+    <arg name="multi_robot_name" value="$(arg multi_robot_name)"/>
+    <arg name="model" value="$(arg model)" />
+  </include>
+
+  <!-- laser_filter -->
+  <arg name="laser_filter_file" default="laser_collision_zone_filter.yaml"/>
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter">
+    <rosparam command="load" file="$(find turtlebot3_bringup)/configuration_files/$(arg laser_filter_file)" />
+  </node>
+  </group>
+</launch>

@@ -1,0 +1,7 @@
+<class_libraries>
+  <library path="lib/libmulti_robot_layer">
+    <class type="multi_robot_layer_namespace::MultiRobotLayer" base_class_type="costmap_2d::Layer">
+      <description>Add up the cost information of other robots</description>
+    </class>
+  </library>
+</class_libraries>

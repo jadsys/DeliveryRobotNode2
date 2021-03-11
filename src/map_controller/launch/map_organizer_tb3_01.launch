@@ -1,0 +1,20 @@
+<launch>
+  <arg name="THRESHOLD_OCCUPIED" default="100" />
+  <arg name="THRESHOLD_FREE" default="99" />
+  <arg name="ENTITY_ID" default="turtlebot_01" />
+  <arg name="ENTITY_TYPE" default="turtlebot" />
+  <arg name="OTHER_ENTITY_ID" default="megarover_01" />
+  <arg name="OTHER_ENTITY_TYPE" default="megarover" />
+  <node pkg="map_controller" type="map_organizer" name="map_organizer_node_$(arg ENTITY_ID)" args="--occ $(arg THRESHOLD_OCCUPIED) --free $(arg THRESHOLD_FREE)" output="screen" >
+    <param name="entity_id" value="$(arg ENTITY_ID)" />
+    <param name="entity_type" value="$(arg ENTITY_TYPE)" />
+    <remap to="/$(arg ENTITY_ID)/map"                                      from="/map" />
+    <remap to="/$(arg ENTITY_ID)/map_movebase"                             from="/map_movebase" />
+    <remap to="/$(arg ENTITY_ID)/map_metadata"                             from="/map_metadata" />
+    <remap to="/$(arg ENTITY_ID)/move_base/global_costmap/costmap"         from="/move_base/global_costmap/costmap" />
+    <remap to="/$(arg ENTITY_ID)/move_base/global_costmap/costmap_updates" from="/move_base/global_costmap/costmap_updates" />
+    <remap to="/$(arg OTHER_ENTITY_ID)/move_base/NavfnROS/plan"            from="/move_base/NavfnROS/plan" />
+    <rosparam file="$(find map_controller)/param/map_organizer_node_$(arg ENTITY_ID).yaml" command="load" />
+  </node>
+
+</launch>
